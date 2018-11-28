@@ -1,0 +1,22 @@
+LIBRARY conctrl
+EXPORTS
+
+CreateConsoleWindow
+ResizeConsoleWindow
+SetConsoleWindowTitle
+CreatePannel
+DestroyPannel
+SetMaxLineCache
+AddPannelText
+AddPannelLine
+ClearPannel
+MovePannel
+ScrollPannelBackward
+ScrollPannelForward
+ScrollPannelTo
+FocusOnPannel
+CreateSpliter
+DestroySpliter
+MoveSpliter
+
+
