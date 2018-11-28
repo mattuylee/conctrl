@@ -15,41 +15,44 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\Master\OneDrive\Code\ConsoleController\coding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\Master\OneDrive\Code\ConsoleController\conctrl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\Master\OneDrive\Code\ConsoleController\pannel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\Master\OneDrive\Code\ConsoleController\spliter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\Master\OneDrive\Code\ConsoleController\console_window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="C:\Users\Master\OneDrive\Code\ConsoleController\conctrl.cpp">
+    <ClCompile Include="coding.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Master\OneDrive\Code\ConsoleController\pannel.cpp">
+    <ClCompile Include="conctrl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Master\OneDrive\Code\ConsoleController\spliter.cpp">
+    <ClCompile Include="console_window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Master\OneDrive\Code\ConsoleController\coding.cpp">
+    <ClCompile Include="pannel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Master\OneDrive\Code\ConsoleController\console_window.cpp">
+    <ClCompile Include="spliter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="C:\Users\Master\OneDrive\Code\ConsoleController\conctrl.def">
+    <ClInclude Include="coding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="conctrl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pannel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="spliter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="console_window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="conctrl.def">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="README.md">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -18,6 +18,24 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="coding.cpp" />
+    <ClCompile Include="conctrl.cpp" />
+    <ClCompile Include="console_window.cpp" />
+    <ClCompile Include="pannel.cpp" />
+    <ClCompile Include="spliter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="coding.h" />
+    <ClInclude Include="conctrl.h" />
+    <ClInclude Include="console_window.h" />
+    <ClInclude Include="pannel.h" />
+    <ClInclude Include="spliter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="conctrl.def" />
+    <None Include="README.md" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{4830BECE-AD04-4FE9-AED7-74A4492BBF32}</ProjectGuid>
@@ -114,23 +132,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="C:\Users\Master\OneDrive\Code\ConsoleController\coding.h" />
-    <ClInclude Include="C:\Users\Master\OneDrive\Code\ConsoleController\conctrl.h" />
-    <ClInclude Include="C:\Users\Master\OneDrive\Code\ConsoleController\console_window.h" />
-    <ClInclude Include="C:\Users\Master\OneDrive\Code\ConsoleController\pannel.h" />
-    <ClInclude Include="C:\Users\Master\OneDrive\Code\ConsoleController\spliter.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="C:\Users\Master\OneDrive\Code\ConsoleController\coding.cpp" />
-    <ClCompile Include="C:\Users\Master\OneDrive\Code\ConsoleController\conctrl.cpp" />
-    <ClCompile Include="C:\Users\Master\OneDrive\Code\ConsoleController\console_window.cpp" />
-    <ClCompile Include="C:\Users\Master\OneDrive\Code\ConsoleController\pannel.cpp" />
-    <ClCompile Include="C:\Users\Master\OneDrive\Code\ConsoleController\spliter.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="C:\Users\Master\OneDrive\Code\ConsoleController\conctrl.def" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
