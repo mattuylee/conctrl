@@ -65,7 +65,7 @@ void Pannel::Move(SMALL_RECT rect) {
  */
 void Pannel::AddText(std::string text, int attribute) {
 	//将要添加的文本与最后一行拼接。否则每次调用本函数将直接写到新行
-	if (this->lines.size() > 0 && this->isTrueLine(lines.back())) {
+	if (this->lines.size() > 0 && !this->isTrueLine(lines.back())) {
 		text = this->lines.back().text + text;
 		lines.pop_back();
 	}
@@ -102,7 +102,7 @@ void Pannel::Flush() {
 	if (this->lines.size() == 0) return; //空缓冲区
 	//获取迭代起点
 	std::vector<Line>::iterator iter;
-	if (this->lines.size() <= lineCount) {
+	if (this->lines.size() <= (size_t)lineCount) {
 		iter = this->lines.begin();
 	} //显示所有行
 	else if (this->from < 0 || this->from >= this->lines.size()) {
@@ -113,7 +113,7 @@ void Pannel::Flush() {
 	} //显示特定屏
 	//写文本行
 	COORD lineStart = { 0, 0 };
-	for (size_t i = 0; i < lineCount; i++) {
+	for (size_t i = 0; i < (size_t)lineCount; i++) {
 		DWORD writtenCount;
 		//获取除去换行符的字符长度
 		int length = iter->text.size();
@@ -138,11 +138,11 @@ bool Pannel::ScrollForward(int lineCount) {
 	int to = this->from;
 	if (this->from < 0 || lineCount < 0)	return false;
 	else	to += lineCount;
-	return ScrollTo(to < this->lines.size() ? to : -1);
+	return ScrollTo(to < (int)this->lines.size() ? to : -1);
 }
 //滚到
 bool Pannel::ScrollTo(int line) {
-	if (line >= this->lines.size()) return false;
+	if (line >= (int)this->lines.size()) return false;
 	int to = line < 0 ? -1 : line;
 	if (this->from != to) {
 		this->from = to;
@@ -164,7 +164,7 @@ bool Pannel::Focus(COORD _coord){
 	return SetConsoleCursorPosition(this->window->hOutput, coord);
 }
 
-//将文本分割为若干行。
+//将文本分割为若干行，至少保证一行
 std::vector<std::string> Pannel::splitToLines(std::string _text) {
 	int charCount = this->area.Right - this->area.Left + 1;
 	if (charCount <= 0) {
@@ -178,12 +178,13 @@ std::vector<std::string> Pannel::splitToLines(std::string _text) {
 	do {
 		int i;
 		line = "";
-		for (i = 0; i < charCount; i++) {
-			if (!text[start + i]) break; //文本结尾
+		for (i = 0; text[start + i] && i < charCount; i++) {
 			if (text[start + i] == '\r' || text[start + i] == '\n') {
 				line += "\r\n";
 				break;
 			} //自然换行的行尾保留换行符
+			//行最后一个字符无法显示双字节字符
+			if (i == charCount - 1 && text[i + start] > 127) break;
 			line += text[i + start];
 		} //扫描一行（已计算边框）
 		//过滤换行符

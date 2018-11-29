@@ -1,4 +1,8 @@
 #include <iostream>
+#include "console_window.h"
+#include "pannel.h"
+#include "spliter.h"
+#include "coding.h"
 #include "conctrl.h"
 
 //创建当前控制台窗口对应的控制窗口

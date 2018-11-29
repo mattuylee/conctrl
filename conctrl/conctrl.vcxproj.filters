@@ -49,10 +49,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="conctrl.def">
+    <None Include="..\README.md">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="README.md">
+    <None Include="conctrl.def">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

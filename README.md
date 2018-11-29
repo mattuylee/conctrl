@@ -12,33 +12,38 @@
 ## 开发环境
 &emsp;&emsp;Windows，Visual Studio 2017
 
-## 说明
+## 注意事项
 &emsp;&emsp;需要注意的是，窗格只是逻辑意义上的窗格，它们属于同一个控制台窗口，共享输入缓冲区，因此这个库仅**适用于需要多个窗格用于输出**而不超过1个窗格同时用来输入。
 
-&emsp;&emsp;构建这个库的初衷是为了方便某些高级语言操作控制台，因此将它的导出函数的参数都设定为简单的数值型和字符串，避免在高级语言中额外定义数据类型，方便使用。
+&emsp;&emsp;分隔线是需要占用空间的，由于制表符是双字节字符，因此分隔线长度必须是2的倍数。同时注意，水平分割线的**高度**是1个字符，而**垂直分隔线的宽度是2个字符**。
+
+&emsp;&emsp;构建这个库的初衷是为了方便某些高级语言操作控制台，因此没有导出类而是封装了一系列C函数，并将它们的参数都设定为简单的数值型和字符串，避免在高级语言中额外定义数据类型，方便使用。
+### &emsp;&emsp;**你不应该直接操作ConsoleWindow、Pannel、和Spliter类对象**，而应仅将它们的指针作为参数传递。
 
 &emsp;&emsp;此库通过调用Windows API实现，因此仅适用于Windows系统。
+
+## 使用示例
+* ### C/C++
+    将conctrl.dll和conctrl.h放到同一目录；
+    
+* ### 其他语言
+
+
+
+## 导出函数列表
+
 
 ## 缺陷
 * 对用户输入的控制比较无力
 * 只能对整行设定字符样式
 * 其他
 
-## 使用示例
-* ### C/C++
-    
-* ### 其他语言
-
-
-
-## 函数列表
-
-
 
 ## 辅助资料
 <a name="constant"> </a>
 
 ### Windows控制台字符样式常量
+定义于consoleapi2.h，使用引入windows.h或自定义
 ```C
 #define FOREGROUND_BLUE      0x0001 // text color contains blue.
 #define FOREGROUND_GREEN     0x0002 // text color contains green.
@@ -59,4 +64,4 @@
 ```
 
 ## 项目地址
-[https://github.com/mattuy/conctrl.git](https://github.com/mattuy/conctrl.git)
+[https://github.com/mattuylee/conctrl.git](https://github.com/mattuylee/conctrl.git)

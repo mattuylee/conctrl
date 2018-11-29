@@ -32,9 +32,9 @@ void Spliter::draw(bool clear) {
 	//取步进方向
 	SHORT* direct = this->verticle ? &curPosition.Y : &curPosition.X;
 	//画分割线
-	for (SHORT i = 0; i < this->length; i++) {
+	for (; *direct < this->length; ) {
 		FillConsoleOutputAttribute(this->window->hOutput, this->attribute, 2, curPosition, &written);
 		WriteConsoleOutputCharacter(this->window->hOutput, spliter, 2, curPosition, &written);
-		this->verticle ? curPosition.Y += 2 : curPosition.X += 2;
+		this->verticle ? curPosition.Y += 1 : curPosition.X += 2;
 	}
 }
