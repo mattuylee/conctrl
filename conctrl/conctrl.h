@@ -1,13 +1,11 @@
 // ConsoleController
 // 2018-11-28
 // By Mattuy
-
 #ifndef _HEAD_CONSOLE_CONTROLLER_
 #define _HEAD_CONSOLE_CONTROLLER_
-#include "console_window.h"
-#include "pannel.h"
-#include "spliter.h"
-#include "coding.h"
+class ConsoleWindow;
+class Pannel;
+class Spliter;
 /**
  * 创建控制台控制器
  * @return value, 指向当前控制台的控制台操作对象的指针，作为其他函数的参数，以通过它控制
