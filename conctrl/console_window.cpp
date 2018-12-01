@@ -21,6 +21,7 @@ bool ConsoleWindow::InitWindow() {
 
 //重新设定窗口缓冲区大小
 bool ConsoleWindow::Resize(COORD size) {
+	bool success = false;
 	//记录原来的窗口信息
 	CONSOLE_SCREEN_BUFFER_INFO info;
 	GetConsoleScreenBufferInfo(this->hOutput, &info);
@@ -29,14 +30,13 @@ bool ConsoleWindow::Resize(COORD size) {
 	SMALL_RECT rect = { 0, 0, 5, 5 };
 	if (!SetConsoleWindowInfo(this->hOutput, true, &rect))
 		return false;
-	if (!SetConsoleScreenBufferSize(hOutput, { size.X, size.Y })) {
-		SetConsoleWindowInfo(this->hOutput, true, &info.srWindow); //还原窗口
-		return false;
-	}
-	//设置窗口大小
-	rect = { 0, 0, size.X - 1, size.Y - 1 };
-	SetConsoleWindowInfo(this->hOutput, true, &rect);
-	return true;
+	success = SetConsoleScreenBufferSize(hOutput, { size.X, size.Y });
+	rect = info.srWindow;
+	//调整窗口
+	if (rect.Right - rect.Left + 1 > size.X || !success) rect.Right = rect.Left + size.X - 1;
+	if (rect.Bottom - rect.Top + 1 > size.Y || !success) rect.Bottom = rect.Top + size.Y - 1;
+	SetConsoleWindowInfo(this->hOutput, true, &rect); //还原窗口
+	return success;
 }
 
 //创建窗格

@@ -1,4 +1,4 @@
-#include <iostream>
+#define _CRT_SECURE_NO_WARNINGS
 #include "console_window.h"
 #include "pannel.h"
 #include "spliter.h"
@@ -9,11 +9,17 @@
 ConsoleWindow* CreateConsoleWindow(int width, int height) {
 	if (width <= 5 || height <= 5 || width > 32767 || height > 32767)
 		return new(std::nothrow)  ConsoleWindow();
-	else
+	else {
 		return new(std::nothrow) ConsoleWindow(width, height);
+	}
 }
+
+void DestroyConsoleWindow(ConsoleWindow* window) {
+	delete window;
+}
+
 //重新设置窗口和缓冲区大小
-bool ResizeConsoleWindow(ConsoleWindow* window, int width, int height) {
+bool ResizeScreenBuffer(ConsoleWindow* window, int width, int height) {
 	if (width <= 5 || height <= 5 || width > 32767 || height > 32767)
 		return false;
 	return window->Resize({ (SHORT)width, (SHORT)height });
@@ -29,10 +35,10 @@ bool SetConsoleWindowTitle(char* _title, bool utf8) {
 }
 //创建一个窗格
 Pannel* CreatePannel(ConsoleWindow* window, int left, int top, int width, int height) {
-	if (left < 0 || top < 0 || width <= 5 || height <= 5
+	if (left < 0 || top < 0
 		|| left > 32767 || top > 32767 || width > 32767 || height > 32767
 		) return NULL;
-	return window->NewPannel({ (SHORT)left, (SHORT)top, (SHORT)width - 1, (SHORT)height - 1 });
+	return window->NewPannel({ (SHORT)left, (SHORT)top, (SHORT)(left + width - 1), (SHORT)(top + height - 1) });
 }
 //删除窗格
 void DestroyPannel(ConsoleWindow* window, Pannel* pannel) {
@@ -45,18 +51,18 @@ bool SetMaxLineCache(Pannel* pannel, int lineCount) {
 	return true;
 }
 //向Pannel中添加文本
-void AddPannelText(Pannel* pannel, const char* _text, bool utf8, int attribute) {
+void AddPannelText(Pannel* pannel, const char* _text, bool focus, bool utf8, int attribute) {
 	std::string text;
 	if (utf8)	text = UTF8ToANSI(_text);
 	else	text = _text;
-	pannel->AddText(text, attribute);
+	pannel->AddText(text, focus, attribute);
 }
 //向Pannel中添加行
-void AddPannelLine(Pannel* pannel, const char* _text, bool utf8, int attribute) {
+void AddPannelLine(Pannel* pannel, const char* _text, bool focus, bool utf8, int attribute) {
 	std::string text;
 	if (utf8)	text = UTF8ToANSI(_text);
 	else	text = _text;
-	pannel->AddLine(text, attribute);
+	pannel->AddLine(text, focus, attribute);
 }
 //清空Pannel
 void ClearPannel(Pannel* pannel) {
@@ -69,7 +75,7 @@ bool MovePannel(Pannel* pannel, int left, int top, int width, int height) {
 	if (top < 0)	top = pannel->area.Top;
 	if (width <= 5)	width = pannel->area.Right - pannel->area.Left + 1;
 	if (height <= 5)	height = pannel->area.Bottom - pannel->area.Top+ 1;
-	pannel->Move({ (SHORT)left, (SHORT)top, (SHORT)width - 1, (SHORT)height - 1});
+	pannel->Move({ (SHORT)left, (SHORT)top, (SHORT)(left + width - 1), (SHORT)(top + height - 1)});
 	return true;
 }
 //向前滚屏
@@ -86,7 +92,7 @@ bool ScrollPannelTo(Pannel* pannel, int lineTo) {
 }
 //将光标设置到窗格的特定位置
 bool FocusOnPannel(Pannel* pannel, int offsetLeft, int offsetTop) {
-	return pannel->Focus({ (SHORT)offsetLeft, (SHORT)offsetTop});
+	return pannel->Focus({ (SHORT)offsetLeft, (SHORT)offsetTop });
 }
 //创建一条分隔线。
 Spliter* CreateSpliter(ConsoleWindow* window, int left, int top, int length, bool verticle, int attribute) {

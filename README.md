@@ -9,6 +9,8 @@
 
 &emsp;&emsp;你可以为每一**行**设定字符格式，字符格式由Windows的一些<a href="#constant">常量</a>定义。
 
+
+
 ## 开发环境
 &emsp;&emsp;Windows，Visual Studio 2017
 
@@ -22,10 +24,13 @@
 
 &emsp;&emsp;此库通过调用Windows API实现，因此仅适用于Windows系统。
 
-## 使用示例
-* ### C/C++
-    将conctrl.dll和conctrl.h放到同一目录；
-    
+## 使用方法
+* ### C++
+    将conctrl.h，conctrl.dll和conctrl.lib放在源代码目录，并在源代码中添加：
+    > `#include "conctrl.h"`  
+    > `#pragma comment(lib, "conctrl.lib")`
+
+    <a href="#usage_cpp">查看示例</a>
 * ### 其他语言
 
 
@@ -39,10 +44,41 @@
 * 其他
 
 
-## 辅助资料
-<a name="constant"> </a>
+## 使用示例
+<a name="usage_cpp"></a>
+### C++（VC）
 
+```C++
+#include <stdio.h>
+#include <Windows.h>
+#include "conctrl.h"
+#pragma comment(lib, "conctrl.lib")
+int main() {
+	ConsoleWindow* window = CreateConsoleWindow(80, 40);
+	Pannel* messagePannel = CreatePannel(window, 0, 0, 78, 25);
+	Pannel* writePannel= CreatePannel(window, 0, 26, 80, 40);
+	Spliter* spliter = CreateSpliter(window, 0, 25, 80, false, FOREGROUND_GREEN);
+	AddPannelLine(messagePannel, "请在下方区域输入任意内容", false);
+	FocusOnPannel(writePannel, 0, 0);
+	while (true) {
+		char str[1024];
+		gets_s(str, 1024);
+		AddPannelLine(messagePannel, str, false, FOREGROUND_RED|FOREGROUND_GREEN);
+		ClearPannel(writePannel);
+		FocusOnPannel(writePannel, 0, 0);
+	}
+}
+```
+```C
+
+```
+
+
+## 辅助资料
+
+<a name="constant"></a>
 ### Windows控制台字符样式常量
+
 定义于consoleapi2.h，使用引入windows.h或自定义
 ```C
 #define FOREGROUND_BLUE      0x0001 // text color contains blue.

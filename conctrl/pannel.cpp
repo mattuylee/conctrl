@@ -7,6 +7,10 @@ Pannel::Pannel(ConsoleWindow* _controller, SMALL_RECT rect) {
 	this->from = -1; //默认打印最新行
 	this->maxLineCount = 4096;
 }
+Pannel::~Pannel() {
+	this->clearScreen();
+}
+
 //设置最大行数
 void Pannel::SetMaxLine(SHORT lineCount) {
 	if (lineCount < 0) lineCount = 0;
@@ -57,13 +61,8 @@ void Pannel::Move(SMALL_RECT rect) {
 	} //重新分割文本行
 	this->Flush();
 }
-/**
- * 向窗格添加文本
- * @return value, 成功返回true, 否则返回false
- * @param text, 要写入的文本
- * @param attribute, 文本属性，详见 FORGROUND_*和BACKGROUND_* 常量
- */
-void Pannel::AddText(std::string text, int attribute) {
+//向窗格添加文本
+void Pannel::AddText(std::string text, bool focus, int attribute) {
 	//将要添加的文本与最后一行拼接。否则每次调用本函数将直接写到新行
 	if (this->lines.size() > 0 && !this->isTrueLine(lines.back())) {
 		text = this->lines.back().text + text;
@@ -81,12 +80,22 @@ void Pannel::AddText(std::string text, int attribute) {
 		line.attribute = attribute;
 		this->lines.push_back(line);
 	} //加入新的文本行
+	//把光标置到新添加的文本之后
+	if (focus && this->lines.size()) {
+		COORD coord;
+		coord.X = isTrueLine(lines.back()) ? 0 : this->lines.back().text.size();
+		if (this->lines.size() > this->area.Bottom - this->area.Top + 1)  coord.Y = this->area.Bottom;
+		else  coord.Y = this->lines.size() - 1;
+		coord.Y = isTrueLine(lines.back()) ? coord.Y + 1 : coord.Y;
+		this->Focus(coord);
+	}
+	else if (focus)  this->Focus({ 0,0 });
 	this->Flush();
 }
 //添加行
-void Pannel::AddLine(std::string text, int attribute) {
+void Pannel::AddLine(std::string text, bool focus, int attribute) {
 	if (text.size() && !this->isTrueLine(text)) text += '\n';
-	this->AddText(text, attribute);
+	this->AddText(text, focus, attribute);
 };
 
 //刷新显示
@@ -159,8 +168,8 @@ bool Pannel::Focus(COORD _coord){
 		return false;
 	}
 	COORD coord;
-	coord.X = this->area.Left + _coord.X;
-	coord.Y = this->area.Top + _coord.Y;
+	coord.X = this->area.Left +_coord.X;
+	coord.Y = this->area.Top +_coord.Y;
 	return SetConsoleCursorPosition(this->window->hOutput, coord);
 }
 

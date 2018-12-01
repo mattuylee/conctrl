@@ -11,6 +11,7 @@ public:
 	COORD position; //位置
 	SHORT length; //宽度/高度
 	Spliter(ConsoleWindow* window, COORD pos, SHORT len, bool verticle, WORD attr = 7);
+	~Spliter();
 	//从屏幕清除
 	void Clear();
 	//移动或重新设置长度
