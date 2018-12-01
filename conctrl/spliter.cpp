@@ -10,6 +10,10 @@ Spliter::Spliter(ConsoleWindow* window, COORD pos, SHORT len, bool verticle, WOR
 	this->draw();
 }
 
+Spliter::~Spliter() {
+	this->Clear();
+}
+
 void Spliter::Clear() {
 	this->draw(true);
 }

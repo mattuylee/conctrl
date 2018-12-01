@@ -14,6 +14,7 @@ public:
 	SHORT maxLineCount; //最大保存文本行数
 	SMALL_RECT area; //窗格区域（包含边框）
 	Pannel(ConsoleWindow* window, SMALL_RECT rect);
+	~Pannel();
 	//设置最大缓存行数
 	void SetMaxLine(SHORT lineCount);
 	//清空窗格文本
@@ -21,9 +22,9 @@ public:
 	//移动窗格和重新设置大小
 	void Move(SMALL_RECT rect);
 	//向窗格中加入文本
-	void AddText(std::string text, int attribute = 7);
+	void AddText(std::string text, bool focus = false, int attribute = 7);
 	//向窗格中加入文本行
-	void AddLine(std::string text, int attribute = 7);
+	void AddLine(std::string text, bool focus = false, int attribute = 7);
 	//从特定行开始打印一屏。若this.from无效则打印最后一屏
 	void Flush();
 	//向前滚动，当前已到达最前页返回false，否则返回true
