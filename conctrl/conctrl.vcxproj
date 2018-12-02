@@ -22,7 +22,6 @@
     <ClCompile Include="coding.cpp" />
     <ClCompile Include="conctrl.cpp" />
     <ClCompile Include="console_window.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="pannel.cpp" />
     <ClCompile Include="spliter.cpp" />
   </ItemGroup>
