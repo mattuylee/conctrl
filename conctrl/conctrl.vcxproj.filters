@@ -30,6 +30,9 @@
     <ClCompile Include="spliter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="coding.h">
@@ -49,10 +52,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\README.md">
+    <None Include="conctrl.def">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="conctrl.def">
+    <None Include="..\README.md">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
