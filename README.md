@@ -10,7 +10,7 @@
 
 &emsp;&emsp;你可以为每一**行**设定字符格式，字符格式由Windows的一些<a href="#constant">常量</a>定义。
 
-<font color="red">&emsp;&emsp;这不是一个设计严谨的库，使用需谨慎。</font>
+&emsp;&emsp;最初只是为了在某个高级语言中控制控制台输出而写这些函数，<font color="red">**这不是一个设计严谨的库，使用需谨慎。**</font>
 
 ## 开发环境
 &emsp;&emsp;Windows，Visual Studio 2017
@@ -28,7 +28,7 @@
 
 ## 使用方法
 * ### C++
-    将代码目录里的conctrl.h，编译得到的conctrl.dll和conctrl.lib放在相同目录，在你的代码中添加：
+    将代码目录里的conctrl.h，编译得到的conctrl.dll和conctrl.lib放在VS项目目录，在你的代码中添加：
     > `#include "conctrl.h"`  
     > `#pragma comment(lib, "conctrl.lib")`
 
@@ -40,8 +40,6 @@
 &emsp;&emsp;需要注意的是，窗格只是逻辑意义上的窗格，它们属于同一个控制台窗口，共享输入缓冲区，因此这个库仅**适用于需要多个窗格用于输出**而不超过1个窗格同时用来输入。
 
 &emsp;&emsp;分隔线是需要占用空间的，由于制表符是双字节字符，因此分隔线长度必须是2的倍数。同时注意，水平分割线的**高度**是1个字符，而**垂直分隔线的宽度是2个字符**。
-
-&emsp;&emsp;构建这个库的初衷是为了方便某些高级语言操作控制台，因此没有导出类而是封装了一系列C函数，并将它们的参数都设定为简单的数值型和字符串，避免在高级语言中额外定义数据类型，方便使用。
 
 <big> &emsp;&emsp;**你不应该直接操作ConsoleWindow、Pannel、和Spliter类对象**，而应仅将它们的指针作为参数传递。</big>
 
@@ -125,17 +123,18 @@
 #include <string.h>
 #include <Windows.h>
 #include "conctrl.h"
+#pragma comment(lib, "conctrl.lib")
 int main() {
-	ConsoleWindow* window = CreateConsoleWindow(80, 40);
-	Pannel* messagePannel = CreatePannel(window, 0, 0, 78, 25);
-	Pannel* writePannel = CreatePannel(window, 0, 26, 80, 40);
-	Spliter* spliter = CreateSpliter(window, 0, 25, 80, false, FOREGROUND_GREEN);
-	AddPannelText(messagePannel, "输入任意内容，回车发送", true, true, 7);
+	ConsoleWindow* window = CreateConsoleWindow(100, 30);
+	Pannel* messagePannel = CreatePannel(window, 0, 0, 100, 20);
+	Pannel* writePannel = CreatePannel(window, 0, 21, 100, 9);
+	Spliter* spliter = CreateSpliter(window, 0, 20, 100, false, FOREGROUND_GREEN);
+	AddPannelLine(messagePannel, "请在下方输入任意内容，回车发送", false, false, 7);
 	FocusOnPannel(writePannel, 0, 0);
 	while (true) {
-		char str[1024];
-		gets_s(str, 1023);
-		AddPannelText(messagePannel, str, false, false, FOREGROUND_RED | FOREGROUND_GREEN);
+		char text[1024];
+		gets_s(text, 1023);
+		AddPannelLine(messagePannel, text, false, false, FOREGROUND_RED | FOREGROUND_GREEN);
 		ClearPannel(writePannel);
 		FocusOnPannel(writePannel, 0, 0);
 	}
@@ -174,14 +173,6 @@ conctrl
 #define BACKGROUND_GREEN     0x0020 // background color contains green.
 #define BACKGROUND_RED       0x0040 // background color contains red.
 #define BACKGROUND_INTENSITY 0x0080 // background color is intensified.
-#define COMMON_LVB_LEADING_BYTE    0x0100 // Leading Byte of DBCS
-#define COMMON_LVB_TRAILING_BYTE   0x0200 // Trailing Byte of DBCS
-#define COMMON_LVB_GRID_HORIZONTAL 0x0400 // DBCS: Grid attribute: top horizontal.
-#define COMMON_LVB_GRID_LVERTICAL  0x0800 // DBCS: Grid attribute: left vertical.
-#define COMMON_LVB_GRID_RVERTICAL  0x1000 // DBCS: Grid attribute: right vertical.
-#define COMMON_LVB_REVERSE_VIDEO   0x4000 // DBCS: Reverse fore/back ground attribute.
-#define COMMON_LVB_UNDERSCORE      0x8000 // DBCS: Underscore.
-#define COMMON_LVB_SBCSDBCS        0x0300 // SBCS or DBCS flag.
 ```
 
 ## 项目地址
